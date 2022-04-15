@@ -1,9 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@android:color/background_light"
     android:padding="20dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity"
@@ -20,14 +23,18 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
             android:text="Name"
+            android:textColor="@android:color/black"
             android:textSize="18sp" />
 
         <EditText
             android:id="@+id/editTextItemName"
             android:layout_width="0dp"
+            android:textColor="@android:color/black"
             android:layout_height="wrap_content"
             android:layout_weight="0.75"
-            android:hint="Enter Name" />
+            android:hint="Enter Name"
+            android:textColorHint="@color/darkgray"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -41,14 +48,17 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
             android:text="Description"
+            android:textColor="@android:color/black"
             android:textSize="18sp" />
 
         <EditText
             android:id="@+id/editTextItemDescription"
             android:layout_width="0dp"
+            android:textColor="@android:color/black"
             android:layout_height="wrap_content"
             android:layout_weight="0.75"
             android:hint="Enter Description"
+            android:textColorHint="@color/darkgray"
              />
     </LinearLayout>
 
@@ -56,6 +66,7 @@
         android:id="@+id/btnAdd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:theme="@style/Theme.Material3.DynamicColors.DayNight"
         android:text="ADD MEAL" />
 
 

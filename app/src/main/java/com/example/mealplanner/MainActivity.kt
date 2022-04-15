@@ -2,6 +2,7 @@ package com.example.mealplanner
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -88,6 +89,15 @@ class MainActivity : AppCompatActivity() {
     /**
      * Method is used to show the custom update dialog.
      */
+
+    fun viewMeal(mealDataClass: MealDataClass){
+        val intent = Intent(this,ReadMealActivity::class.java)
+        intent.putExtra("id",mealDataClass.id)
+        intent.putExtra("name",mealDataClass.name)
+        intent.putExtra("description",mealDataClass.description)
+        startActivity(intent)
+
+    }
     fun updateRecordDialog(mealDataClass: MealDataClass) {
         val updateDialog = Dialog(this,R.style.Theme_Dialog)
         updateDialog.setCancelable(false)
@@ -97,7 +107,7 @@ class MainActivity : AppCompatActivity() {
         updateDialog.findViewById<EditText>(R.id.editTextUpdateName).setText(mealDataClass.name)
         updateDialog.findViewById<EditText>(R.id.editTextUpdateDescription).setText(mealDataClass.name)
         Toast.makeText(this, "Came here 1", Toast.LENGTH_LONG).show()
-        updateDialog.findViewById<TextView>(R.id.textViewUpdate).setOnClickListener(View.OnClickListener {
+        updateDialog.findViewById<Button>(R.id.btnUpdate).setOnClickListener(View.OnClickListener {
             Toast.makeText(this, "Came here 2", Toast.LENGTH_LONG).show()
 
             val name = updateDialog.findViewById<EditText>(R.id.editTextUpdateName).text.toString()
@@ -123,7 +133,7 @@ class MainActivity : AppCompatActivity() {
                 ).show()
             }
         })
-        updateDialog.findViewById<TextView>(R.id.textViewCancel).setOnClickListener(View.OnClickListener {
+        updateDialog.findViewById<Button>(R.id.btnCancel).setOnClickListener(View.OnClickListener {
             updateDialog.dismiss()
         })
 

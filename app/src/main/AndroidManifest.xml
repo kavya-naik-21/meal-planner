@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MealPlanner" >
         <activity
+            android:name=".ReadMealActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true" >
             <intent-filter>

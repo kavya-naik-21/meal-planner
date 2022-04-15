@@ -12,28 +12,18 @@
     <TextView
         android:id="@+id/textViewName"
         android:layout_width="wrap_content"
+        android:layout_weight="@android:integer/config_shortAnimTime"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         tools:text="Name" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        tools:text=":" />
-
-    <TextView
-        android:id="@+id/textViewDescription"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        tools:text="Email" />
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:id="@+id/btnViewMeal"
+        android:theme="@style/Theme.Material3.DynamicColors.DayNight"
+        android:text="View"
+    />
 
     <ImageView
         android:id="@+id/imageViewEdit"

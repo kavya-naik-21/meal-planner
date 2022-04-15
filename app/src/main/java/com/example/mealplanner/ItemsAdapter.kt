@@ -4,10 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
@@ -45,7 +42,6 @@ class ItemsAdapter(val context: Context, val items: ArrayList<MealDataClass>) :
         val item = items.get(position)
 
         holder.textViewName.text = item.name
-        holder.textViewDescription.text = item.description
 
         // Updating the background color according to the odd/even positions in list.
         if (position % 2 == 0) {
@@ -57,6 +53,12 @@ class ItemsAdapter(val context: Context, val items: ArrayList<MealDataClass>) :
             )
         } else {
             holder.linearlayoutMain.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+        }
+        holder.btnViewMeal.setOnClickListener { view ->
+
+            if (context is MainActivity) {
+                context.viewMeal(item)
+            }
         }
         holder.imageViewEdit.setOnClickListener { view ->
 
@@ -88,14 +90,14 @@ class ItemsAdapter(val context: Context, val items: ArrayList<MealDataClass>) :
         // Holds the TextView that will add each item to
         val linearlayoutMain: LinearLayout
         val textViewName: TextView
-        val textViewDescription: TextView
+        val btnViewMeal: Button
         val imageViewEdit: ImageView
         val imageViewDelete: ImageView
         init {
             // Define click listener for the ViewHolder's View.
             linearlayoutMain = view.findViewById(R.id.linearlayoutMain)
             textViewName = view.findViewById(R.id.textViewName)
-            textViewDescription = view.findViewById(R.id.textViewDescription)
+            btnViewMeal = view.findViewById(R.id.btnViewMeal)
             imageViewEdit = view.findViewById(R.id.imageViewEdit)
             imageViewDelete = view.findViewById(R.id.imageViewDelete)
         }
