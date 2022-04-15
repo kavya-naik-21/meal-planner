@@ -54,20 +54,20 @@ class ItemsAdapter(val context: Context, val items: ArrayList<MealDataClass>) :
         } else {
             holder.linearlayoutMain.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
         }
-        holder.btnViewMeal.setOnClickListener { view ->
+        holder.btnViewMeal.setOnClickListener {
 
             if (context is MainActivity) {
                 context.viewMeal(item)
             }
         }
-        holder.imageViewEdit.setOnClickListener { view ->
+        holder.imageViewEdit.setOnClickListener {
 
             if (context is MainActivity) {
                 context.updateRecordDialog(item)
             }
         }
 
-        holder.imageViewDelete.setOnClickListener { view ->
+        holder.imageViewDelete.setOnClickListener {
 
             if (context is MainActivity) {
                 context.deleteRecordAlertDialog(item)
