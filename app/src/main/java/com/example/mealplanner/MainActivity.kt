@@ -5,8 +5,6 @@ import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -29,16 +27,19 @@ class MainActivity : AppCompatActivity() {
     private fun addRecord() {
         val editTextItemName=findViewById<EditText>(R.id.editTextItemName)
         val editTextItemDescription=findViewById<EditText>(R.id.editTextItemDescription)
+        val editTextItemMethod=findViewById<EditText>(R.id.editTextItemMethod)
         val name = editTextItemName.text.toString()
         val description = editTextItemDescription.text.toString()
+        val method=editTextItemMethod.text.toString()
         val databaseHandler: DataBaseHandler = DataBaseHandler(this)
         if (!name.isEmpty() && !description.isEmpty()) {
             val status =
-                databaseHandler.addMeal(MealDataClass(0, name, description))
+                databaseHandler.addMeal(MealDataClass(0, name, description,method))
             if (status > -1) {
                 Toast.makeText(applicationContext, "Meal saved", Toast.LENGTH_LONG).show()
                 editTextItemName.text.clear()
                 editTextItemDescription.text.clear()
+                editTextItemMethod.text.clear()
             }
         } else {
             Toast.makeText(
@@ -95,6 +96,7 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("id",mealDataClass.id)
         intent.putExtra("name",mealDataClass.name)
         intent.putExtra("description",mealDataClass.description)
+        intent.putExtra("method",mealDataClass.method)
         startActivity(intent)
 
     }
@@ -106,18 +108,19 @@ class MainActivity : AppCompatActivity() {
         updateDialog.setContentView(R.layout.edit_dialog)
         updateDialog.findViewById<EditText>(R.id.editTextUpdateName).setText(mealDataClass.name)
         updateDialog.findViewById<EditText>(R.id.editTextUpdateDescription).setText(mealDataClass.name)
+        updateDialog.findViewById<EditText>(R.id.editTextUpdateMethod).setText(mealDataClass.method)
         Toast.makeText(this, "Came here 1", Toast.LENGTH_LONG).show()
         updateDialog.findViewById<Button>(R.id.btnUpdate).setOnClickListener(View.OnClickListener {
             Toast.makeText(this, "Came here 2", Toast.LENGTH_LONG).show()
 
             val name = updateDialog.findViewById<EditText>(R.id.editTextUpdateName).text.toString()
             val description = updateDialog.findViewById<EditText>(R.id.editTextUpdateDescription).text.toString()
-
+            val method=updateDialog.findViewById<EditText>(R.id.editTextUpdateMethod).text.toString()
             val databaseHandler: DataBaseHandler = DataBaseHandler(this)
 
             if (!name.isEmpty() && !description.isEmpty()) {
                 val status =
-                    databaseHandler.updateMeal(MealDataClass(mealDataClass.id, name, description))
+                    databaseHandler.updateMeal(MealDataClass(mealDataClass.id, name, description,method))
                 if (status > -1) {
                     Toast.makeText(applicationContext, "Meal Updated.", Toast.LENGTH_LONG).show()
 
@@ -157,7 +160,7 @@ class MainActivity : AppCompatActivity() {
             //creating the instance of DatabaseHandler class
             val databaseHandler: DataBaseHandler = DataBaseHandler(this)
             //calling the deleteEmployee method of DatabaseHandler class to delete record
-            val status = databaseHandler.deleteMeal(MealDataClass(mealDataClass.id, "", ""))
+            val status = databaseHandler.deleteMeal(MealDataClass(mealDataClass.id, "", "",""))
             if (status > -1) {
                 Toast.makeText(
                     applicationContext,

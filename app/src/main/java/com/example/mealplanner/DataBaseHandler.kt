@@ -13,7 +13,7 @@ class DataBaseHandler(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
-        private val DATABASE_VERSION = 2
+        private val DATABASE_VERSION = 3
         private val DATABASE_NAME = "MealsDatabase"
 
         private val TABLE_MEALS = "MealsTable"
@@ -21,13 +21,14 @@ class DataBaseHandler(context: Context) :
         private val KEY_ID = "_id"
         private val KEY_NAME = "name"
         private val KEY_DESCRIPTION = "description"
+        private val KEY_METHOD="method"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
         //creating table with fields
         val CREATE_TABLE = ("CREATE TABLE " + TABLE_MEALS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
-                + KEY_DESCRIPTION + " TEXT" + ")")
+                + KEY_DESCRIPTION + " TEXT," + KEY_METHOD + " TEXT"+ ")")
         db?.execSQL(CREATE_TABLE)
     }
 
@@ -44,7 +45,7 @@ class DataBaseHandler(context: Context) :
         val contentValues = ContentValues()
         contentValues.put(KEY_NAME, meal.name) // MealDataClass Name
         contentValues.put(KEY_DESCRIPTION, meal.description) // MealDataClass Email
-
+        contentValues.put(KEY_METHOD,meal.method)
         // Inserting meal details using insert query.
         val success = db.insert(TABLE_MEALS, null, contentValues)
         //2nd argument is String containing nullColumnHack
@@ -76,14 +77,14 @@ class DataBaseHandler(context: Context) :
         var id: Int
         var name: String
         var description: String
-
+        var method:String
         if (cursor.moveToFirst()) {
             do {
                 id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
                 name = cursor.getString(cursor.getColumnIndex(KEY_NAME))
                 description = cursor.getString(cursor.getColumnIndex(KEY_DESCRIPTION))
-
-                val meal = MealDataClass(id = id, name = name, description = description)
+                method=cursor.getString(cursor.getColumnIndex(KEY_METHOD))
+                val meal = MealDataClass(id = id, name = name, description = description, method =method)
                 mealList.add(meal)
 
             } while (cursor.moveToNext())
@@ -98,7 +99,7 @@ class DataBaseHandler(context: Context) :
         val contentValues = ContentValues()
         contentValues.put(KEY_NAME, meal.name) // MealDataClass Name
         contentValues.put(KEY_DESCRIPTION, meal.description) // MealDataClass Email
-
+        contentValues.put(KEY_METHOD,meal.method)
         // Updating Row
         val success = db.update(TABLE_MEALS, contentValues, KEY_ID + "=" + meal.id, null)
         //2nd argument is String containing nullColumnHack

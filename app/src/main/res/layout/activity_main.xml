@@ -59,9 +59,32 @@
             android:layout_weight="0.75"
             android:hint="Enter Description"
             android:textColorHint="@color/darkgray"
-             />
+            />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:text="Method"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/editTextItemMethod"
+            android:layout_width="0dp"
+            android:textColor="@android:color/black"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.75"
+            android:hint="Enter Method"
+            android:textColorHint="@color/darkgray"
+            />
+    </LinearLayout>
     <Button
         android:id="@+id/btnAdd"
         android:layout_width="match_parent"
