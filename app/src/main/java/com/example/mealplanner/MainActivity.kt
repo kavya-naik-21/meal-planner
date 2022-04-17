@@ -92,6 +92,7 @@ class MainActivity : AppCompatActivity() {
      */
 
     fun viewMeal(mealDataClass: MealDataClass){
+//        Toast.makeText(this,"came to viewmeal",Toast.LENGTH_SHORT).show()
         val intent = Intent(this,ReadMealActivity::class.java)
         intent.putExtra("id",mealDataClass.id)
         intent.putExtra("name",mealDataClass.name)

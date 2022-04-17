@@ -1,10 +1,18 @@
 package com.example.mealplanner
 
+import android.app.ProgressDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import com.android.volley.AuthFailureError
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import org.json.JSONObject
 
 class ReadMealActivity : AppCompatActivity() {
 
@@ -40,6 +48,62 @@ class ReadMealActivity : AppCompatActivity() {
     }
 
     private fun Contribute(meal: MealDataClass){
-        Toast.makeText(this, meal.id.toString()+" "+meal.name+" "+meal.description+" "+meal.method+" ", Toast.LENGTH_LONG).show()
+
+        var volleyRequestQueue: RequestQueue? = null
+        var dialog: ProgressDialog? = null
+        
+        val serverAPIURL = "https://mealsplannerapi.herokuapp.com/meals/store"
+
+        volleyRequestQueue = Volley.newRequestQueue(this)
+        dialog = ProgressDialog.show(this, "", "Please wait...", true)
+
+        val parameters: MutableMap<String, String> = HashMap()
+
+        // Add your parameters in HashMap
+        parameters.put("name",meal.name)
+        parameters.put("description",meal.description)
+        parameters.put("method",meal.method)
+
+        val strReq: StringRequest = object : StringRequest(
+            Method.POST,serverAPIURL,
+            Response.Listener { response ->
+                dialog?.dismiss()
+
+                // Handle Server response here
+                try {
+                    val responseObj = JSONObject(response)
+                    val message = responseObj.getString("message")
+                    Toast.makeText(this,message,Toast.LENGTH_LONG).show()
+
+                } catch (e: Exception) { // caught while parsing the response
+                        e.printStackTrace()
+                }
+                              },
+            Response.ErrorListener { volleyError -> // error occurred
+                    Log.e("error", "problem occurred, volley error: " + volleyError.message)
+            })
+                {
+
+                override fun getParams(): MutableMap<String, String> {
+                    return parameters;
+                } //End of getParams
+
+                @Throws(AuthFailureError::class)
+                override fun getHeaders(): Map<String, String> {
+                    val headers: MutableMap<String, String> = HashMap()
+                    // Add your Header paramters here
+                    return headers
+                }//End of get Headers
+
+            } //End of Override functions
+
+
+
+            // Adding request to request queue
+            volleyRequestQueue?.add(strReq)
+
+        } //End of Contribute function
+
+
     }
-}
+
