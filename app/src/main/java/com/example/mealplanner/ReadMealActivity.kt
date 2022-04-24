@@ -1,6 +1,7 @@
 package com.example.mealplanner
 
 import android.app.ProgressDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +13,7 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.firebase.auth.FirebaseAuth
 import org.json.JSONObject
 
 class ReadMealActivity : AppCompatActivity() {
@@ -20,6 +22,7 @@ class ReadMealActivity : AppCompatActivity() {
     private lateinit var textViewName:   TextView
     private lateinit var textViewDescription: TextView
     private lateinit var textViewMethod: TextView
+    lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +46,17 @@ class ReadMealActivity : AppCompatActivity() {
         btnContribute=findViewById(R.id.btnContribute)
 
         btnContribute.setOnClickListener{
-            Contribute(MealDataClass(0,name.toString(),description.toString(),method.toString()))
+            auth= FirebaseAuth.getInstance()
+            var currentUser=auth.currentUser
+            Toast.makeText(this,currentUser.toString(),Toast.LENGTH_LONG).show()
+            if(currentUser==null){
+                startActivity(Intent(this,LoginActivity::class.java))
+                finish()
+//                Toast.makeText(this,"Your are not logged in",Toast.LENGTH_LONG).show()
+            }
+            else{
+                Contribute(MealDataClass(0,name.toString(),description.toString(),method.toString()))
+            }
         }
     }
 
@@ -51,7 +64,7 @@ class ReadMealActivity : AppCompatActivity() {
 
         var volleyRequestQueue: RequestQueue? = null
         var dialog: ProgressDialog? = null
-        
+
         val serverAPIURL = "https://mealsplannerapi.herokuapp.com/meals/store"
 
         volleyRequestQueue = Volley.newRequestQueue(this)
